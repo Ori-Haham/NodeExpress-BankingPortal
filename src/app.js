@@ -23,6 +23,6 @@ function routerFunction() {
 
 app.use('/', routerFunction());
 
-app.server = app.listen(PORT, () => {
-  console.log(`api project listening on port: ${PORT}`);
+app.listen(PORT, () => {
+  console.log('PS Project Running on port 3000!');
 });
