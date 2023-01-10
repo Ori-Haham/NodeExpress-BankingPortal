@@ -7,6 +7,10 @@ const router = express.Router();
 
 var viewPath = path.join(__dirname, './views');
 
+app.set('views', viewPath);
+
+app.set('view engine', 'ejs');
+
 app.use(express.static(path.join(__dirname, '/public/')));
 
 function routerFunction() {
@@ -18,10 +22,6 @@ function routerFunction() {
 }
 
 app.use('/', routerFunction());
-
-app.set('views', viewPath);
-
-app.set('view engine', 'ejs');
 
 app.server = app.listen(PORT, () => {
   console.log(`api project listening on port: ${PORT}`);
