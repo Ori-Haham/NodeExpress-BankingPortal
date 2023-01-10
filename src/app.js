@@ -9,9 +9,15 @@ var viewPath = path.join(__dirname, './views');
 
 app.use(express.static(path.join(__dirname, '/public/')));
 
-router.route('/').get((req, res) => {
-  res.render('index', { title: 'Index' });
-});
+function routerFunction() {
+  router.route('/').get((req, res) => {
+    res.render('index', { title: 'Index' });
+  });
+
+  return router;
+}
+
+app.use('/', routerFunction());
 
 app.set('views', viewPath);
 
