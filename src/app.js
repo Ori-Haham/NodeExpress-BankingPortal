@@ -4,6 +4,7 @@ const express = require('express');
 
 const app = express();
 const router = express.Router();
+const port = process.env.PORT || 3000;
 
 var viewPath = path.join(__dirname, './views');
 
@@ -23,6 +24,6 @@ function routerFunction() {
 
 app.use('/', routerFunction());
 
-app.listen('3000', () => {
+app.listen(3000, () => {
   console.log('PS Project Running on port 3000!');
 });
