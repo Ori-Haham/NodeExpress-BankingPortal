@@ -77,7 +77,7 @@ app.get('/payment', (req, res) => {
 });
 
 app.post('/payment', (req, res) => {
-  const { from, to, amount } = req.body;
+  const { amount } = req.body;
 
   accounts.credit.balance -= parseInt(amount);
   accounts.credit.available = parseInt(amount, 10);
