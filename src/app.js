@@ -45,12 +45,16 @@ function routerFunction() {
     res.render('account', { account: accounts.credit });
   });
 
-  router.route('/profile ').get((req, res) => {
-    res.render('profile', { user: users[0] });
-  });
+  // router.route('/profile ').get((req, res) => {
+  //   res.render('profile', { user: users[0] });
+  // });
 
   return router;
 }
+
+app.get('/profile', (req, res) => {
+  res.render('profile', { user: users[0] });
+});
 
 app.use('/', routerFunction());
 
