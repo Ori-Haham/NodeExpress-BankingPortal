@@ -5,7 +5,9 @@
   <a href="/profile">Profile</a>
 </div>
 
-<%-accounts.savings %> <%-accounts.checking %> <%-accounts.credit %>
+<%- include('summary', {account: account.savings}); %> <%- include('summary',
+{account: account.checking}); %> <%- include('summary', {account:
+account.credit}); %>
 
 <a href="/transfer">Transfer</a>
 
