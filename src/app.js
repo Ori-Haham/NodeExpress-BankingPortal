@@ -33,24 +33,22 @@ function routerFunction() {
     res.render('index', { title: 'Account Summary', accounts });
   });
 
-  router.route('/savings').get((req, res) => {
-    res.render('account', { account: accounts.savings });
-  });
-
-  router.route('/checking').get((req, res) => {
-    res.render('account', { account: accounts.checking });
-  });
-
-  router.route('/credit ').get((req, res) => {
-    res.render('account', { account: accounts.credit });
-  });
-
   // router.route('/profile ').get((req, res) => {
   //   res.render('profile', { user: users[0] });
   // });
 
   return router;
 }
+
+app.get('/savings', (req, res) => {
+  res.render('account', { account: accounts.savings });
+});
+app.get('/checking', (req, res) => {
+  res.render('account', { account: accounts.checking });
+});
+app.get('/credit', (req, res) => {
+  res.render('account', { account: accounts.credit });
+});
 
 app.get('/profile', (req, res) => {
   res.render('profile', { user: users[0] });
