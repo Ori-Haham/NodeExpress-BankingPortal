@@ -7,16 +7,7 @@ const app = express();
 const router = express.Router();
 const port = process.env.PORT || 3000;
 
-const accountsPath = path.resolve(__dirname, './json/accounts.json');
-
-const accountData = fs.readFileSync(accountsPath, 'utf8');
-const accounts = JSON.parse(accountData);
-
-const userData = fs.readFileSync(
-  path.resolve(__dirname, './json/users.json'),
-  'utf8',
-);
-const users = JSON.parse(userData);
+const { accountsPath, accounts, users, writeJSON } = require('./data');
 
 // app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -65,9 +56,7 @@ app.post('/transfer', (req, res) => {
   accounts[from].balance = accounts[from].balance - amount;
   accounts[to].balance = parseInt(accounts[to].balance) + parseInt(amount, 10);
 
-  const accountsJSON = JSON.stringify(accounts, null, 4);
-
-  fs.writeFileSync(accountsPath, accountsJSON, 'utf8');
+  writeJSON();
 
   res.render('transfer', { message: 'Transfer Completed' });
 });
@@ -95,12 +84,7 @@ app.get('/payment', (req, res) => {
 app.post('/payment', (req, res) => {
   accounts.credit.balance -= req.body.amount;
   accounts.credit.available += parseInt(req.body.amount);
-  let accountsJSON = JSON.stringify(accounts, null, 4);
-  fs.writeFileSync(
-    path.join(__dirname, 'json', 'accounts.json'),
-    accountsJSON,
-    'utf8',
-  );
+  writeJSON();
   res.render('payment', {
     message: 'Payment Successful',
     account: accounts.credit,
@@ -108,6 +92,6 @@ app.post('/payment', (req, res) => {
 });
 app.use('/', routerFunction());
 
-app.listen(3000, () => {
-  console.log('PS Project Running on port 3000!');
+app.listen(port, () => {
+  console.log(`PS Project Running on port 3000! ${port}`);
 });
