@@ -1,17 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const { json } = require('express');
 
 const app = express();
 const router = express.Router();
 const port = process.env.PORT || 3000;
 
-const x = require('./json/accounts.json');
+const accountsPath = path.resolve(__dirname, './json/accounts.json');
 
-const accountData = fs.readFileSync(
-  path.resolve(__dirname, './json/accounts.json'),
-  'utf8',
-);
+const accountData = fs.readFileSync(accountsPath, 'utf8');
 const accounts = JSON.parse(accountData);
 
 const userData = fs.readFileSync(
@@ -19,6 +17,9 @@ const userData = fs.readFileSync(
   'utf8',
 );
 const users = JSON.parse(userData);
+
+// app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 var viewPath = path.join(__dirname, './views');
 
@@ -54,6 +55,44 @@ app.get('/profile', (req, res) => {
   res.render('profile', { user: users[0] });
 });
 
+app.get('/transfer', (req, res) => {
+  res.render('transfer');
+});
+
+app.post('/transfer', (req, res) => {
+  const { from, to, amount } = req.body;
+
+  accounts[from].balance = parseInt(accounts[from].balance) - parseInt(amount);
+  accounts[to].balance = parseInt(accounts[to].balance) + parseInt(amount);
+
+  const accountsJSON = JSON.stringify(accounts);
+
+  fs.writeFileSync(accountsPath, accountsJSON);
+
+  res.render('transfer', { message: 'Transfer Completed' });
+});
+
+app.get('/payment', (req, res) => {
+  res.render('payment', { account: accounts.credit });
+});
+
+app.post('/payment', (req, res) => {
+  const { from, to, amount } = req.body;
+
+  accounts.credit.balance =
+    parseInt(accounts.credit.balance) - parseInt(amount);
+  accounts.credit.available =
+    parseInt(accounts.credit.available) + parseInt(amount);
+
+  const accountsJSON = JSON.stringify(accounts);
+
+  fs.writeFileSync(accountsPath, accountsJSON);
+
+  res.render('payment ', {
+    message: 'Payment Successful',
+    account: accounts.credit,
+  });
+});
 app.use('/', routerFunction());
 
 app.listen(3000, () => {
