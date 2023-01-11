@@ -9,13 +9,13 @@ const port = process.env.PORT || 3000;
 const x = require('./json/accounts.json');
 
 const accountData = fs.readFileSync(
-  path.join(__dirname, './json/accounts.json'),
+  path.resolve(__dirname, './json/accounts.json'),
   'utf8',
 );
 const accounts = JSON.parse(accountData);
 
 const userData = fs.readFileSync(
-  path.join(__dirname, './json/users.json'),
+  path.resolve(__dirname, './json/users.json'),
   'utf8',
 );
 const users = JSON.parse(userData);
