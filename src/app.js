@@ -86,7 +86,7 @@ app.post('/payment', (req, res) => {
 
   fs.writeFileSync(accountsPath, accountsJSON, 'utf8');
 
-  res.render('payment ', {
+  res.render('payment', {
     message: 'Payment Successful',
     account: accounts.credit,
   });
