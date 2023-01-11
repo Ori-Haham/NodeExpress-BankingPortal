@@ -6,10 +6,18 @@ const app = express();
 const router = express.Router();
 const port = process.env.PORT || 3000;
 
-const accountData = fs.readFileSync('./json/accounts.json', 'utf8');
+const x = require('./json/accounts.json');
+
+const accountData = fs.readFileSync(
+  path.join(__dirname, './json/accounts.json'),
+  'utf8',
+);
 const accounts = JSON.parse(accountData);
 
-const userData = fs.readFileSync('./json/accounts.json', 'utf8');
+const userData = fs.readFileSync(
+  path.join(__dirname, './json/users.json'),
+  'utf8',
+);
 const users = JSON.parse(userData);
 
 var viewPath = path.join(__dirname, './views');
