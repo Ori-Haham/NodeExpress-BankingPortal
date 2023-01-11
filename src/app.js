@@ -79,7 +79,7 @@ app.get('/payment', (req, res) => {
 app.post('/payment', (req, res) => {
   const { amount } = req.body;
 
-  accounts.credit.balance -= parseInt(amount);
+  accounts.credit.balance -= amount;
   accounts.credit.available = parseInt(amount, 10);
 
   const accountsJSON = JSON.stringify(accounts, null, 4);
