@@ -7,7 +7,7 @@ const app = express();
 const router = express.Router();
 const port = process.env.PORT || 3000;
 
-const { accountsPath, accounts, users, writeJSON } = require('./data');
+const { accounts, users, writeJSON } = require('./data');
 const accountRoutes = require('./routes/accounts');
 const servicesRoutes = require('./routes/services');
 
